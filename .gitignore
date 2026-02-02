@@ -1,0 +1,29 @@
+# Environnements virtuels
+venv/
+env/
+.env
+bin/
+lib/
+share/
+pyvenv.cfg
+
+# Fichiers système Mac
+.DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Fichiers PDF, archives et LaTeX
+*.pdf
+*.zip
+*.aux
+*.log
+*.out
+*.toc
+*.gz

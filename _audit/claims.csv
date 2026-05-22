@@ -1,0 +1,33 @@
+id,section_rapport,page_ou_ligne,chiffre_cite,type,fichier_source_attendu,valeur_recalculee,match,tolerance,note,verifie_2x
+C01,2.5 Paramètres,rapport.tex:238,10.4506,prix_BS,Greeks_Monte_Carlo.ipynb cell 3,10.450584,Y,0.001,arrondi 4 décimales,Y
+C02,2.5 Paramètres,rapport.tex:238,0.6368,delta_BS,Greeks_Monte_Carlo.ipynb cell 3,0.636831,Y,0.0001,arrondi 4 décimales,Y
+C03,2.5 Paramètres,rapport.tex:238,0.0188,gamma_BS,Greeks_Monte_Carlo.ipynb cell 3,0.018762,Y,0.0001,arrondi 4 décimales,Y
+C04,2.5 Paramètres,rapport.tex:238,37.52,vega_BS,Greeks_Monte_Carlo.ipynb cell 3,37.524035,Y,0.01,arrondi 2 décimales,Y
+C05,6.1 Delta - tableau,rapport.tex:466 FD ligne,0.6372,delta_FD_estim,Greeks_Monte_Carlo.ipynb cell 7,0.637755,N,0.0005,rapport=0.6372 vs notebook=0.637755 ; diff 5.5e-4 hors tolérance arrondi 4déc. Probable run rapport differ from notebook seed,Y
+C06,6.1 Delta - tableau,rapport.tex:466 FD ecart-type,0.0021,sigma_FD_delta,Greeks_Monte_Carlo.ipynb cell 7 IC=0.001160,5.9e-4 (=0.00116/1.96),N,0.0005,rapport ecart-type 0.0021 ; notebook donne IC 95% 0.001160 soit sigma=0.00116/1.96=5.9e-4. Rapport ~3.5× plus grand. Incohérence,Y
+C07,6.1 Delta - tableau,rapport.tex:467 PW estim,0.6370,delta_PW_estim,Greeks_Monte_Carlo.ipynb cell 7,0.637866,N,0.0005,diff 8.7e-4 hors tolérance,Y
+C08,6.1 Delta - tableau,rapport.tex:467 PW sigma,0.0021,sigma_PW_delta,Greeks_Monte_Carlo.ipynb cell 7 IC=0.001265,6.5e-4 (=0.001265/1.96),N,0.0005,~3.2× écart,Y
+C09,6.1 Delta - tableau,rapport.tex:468 MAL estim,0.6365,delta_MAL_estim,Greeks_Monte_Carlo.ipynb cell 7,0.640390,Y,0.005,within +/- 0.005 ; OK,Y
+C10,6.1 Delta - tableau,rapport.tex:468 MAL sigma,0.0152,sigma_MAL_delta,Greeks_Monte_Carlo.ipynb cell 7 IC=0.008278,4.2e-3 (=0.008278/1.96),N,0.001,~3.6× écart,Y
+C11,6.1 Delta - texte,rapport.tex:478,7×,ratio_Var_MAL_vs_PW,Greeks_Monte_Carlo.ipynb cell 7 IC ratio,IC_MAL/IC_PW=0.008278/0.001265=6.54,Y,1.0,rapport dit ~7× ; calcul donne 6.5× donc cohérent ; tolérance 1×,Y
+C12,6.2 Gamma - tableau,rapport.tex:500 FD estim,0.01882,gamma_FD_estim,Greeks_Monte_Carlo.ipynb cell 10,0.018280,N,0.0002,diff 5.4e-4 ; rapport overstate ~3%. Plus que tolérance arrondi 5déc (1e-5),Y
+C13,6.2 Gamma - tableau,rapport.tex:500 FD sigma,0.00052,sigma_FD_gamma,Greeks_Monte_Carlo.ipynb cell 10 IC=0.000660,3.4e-4 (=0.000660/1.96),N,0.0001,~1.5× écart,Y
+C14,6.2 Gamma - tableau,rapport.tex:502 MAL estim,0.01871,gamma_MAL_estim,Greeks_Monte_Carlo.ipynb cell 10,0.019226,N,0.0002,diff 5.2e-4 hors tolérance arrondi 5déc,Y
+C15,6.2 Gamma - tableau,rapport.tex:502 MAL sigma,0.00178,sigma_MAL_gamma,Greeks_Monte_Carlo.ipynb cell 10 IC=0.000879,4.5e-4 (=0.000879/1.96),N,0.0001,~4× écart,Y
+C16,6.3 Vega - tableau,rapport.tex:534 FD estim,37.52,vega_FD_estim,Greeks_Monte_Carlo.ipynb cell 13,37.610331,N,0.1,diff 0.09 ; arrondi rapport=37.52 alors notebook donne 37.61. Hors tolérance arrondi 2déc (0.005),Y
+C17,6.3 Vega - tableau,rapport.tex:535 PW estim,37.53,vega_PW_estim,Greeks_Monte_Carlo.ipynb cell 13,37.612248,N,0.1,diff 0.08 ; idem,Y
+C18,6.3 Vega - tableau,rapport.tex:536 MAL estim,37.51,vega_MAL_estim,Greeks_Monte_Carlo.ipynb cell 13,38.452636,N,0.5,diff 0.94 ; rapport sous-estime fortement (Mal Vega notebook 38.45 vs rapport 37.51),Y
+C19,6.3 Vega - tableau,rapport.tex:536 MAL sigma,0.85,sigma_MAL_vega,Greeks_Monte_Carlo.ipynb cell 13 IC=1.757307,0.897 (=1.757/1.96),Y,0.1,0.85 vs 0.897 ; OK arrondi,Y
+C20,Synthèse,rapport.tex:552,46×,variance_relative_MAL,Greeks_Monte_Carlo.ipynb cell 7 vs 13 ratios,IC_MAL_delta/IC_PW_delta=6.5 IC_MAL_vega/IC_PW_vega=4.26,N,5.0,rapport synthese affirme MAL ~46x. Notebook ratios 6.5x (delta) 4.3x (vega). Très loin du 46x annoncé. POSSIBLE référence Glasserman section 7.3 ratio variance pour autre setup. PROBABLEMENT chiffre theorique générique non recalculé,Y
+C21,7 Euler,rapport.tex:606,~0.002,erreur_delta_n10,Greeks_Monte_Carlo.ipynb cell 17 (0.641165-0.637866),0.003299,N,0.001,diff réel ~0.003 vs rapport 0.002. Plutôt 0.003,Y
+C22,7 Euler,rapport.tex:607,~0.0008,erreur_delta_n50,Greeks_Monte_Carlo.ipynb cell 17 (0.638025-0.637866),0.000159,N,0.0003,erreur calculée 0.00016 (vs réf Exact 0.637866), rapport surestime ~5×. Si comparé à BS 0.636831 donne 0.001194 ; mieux mais 0.0008 reste optimiste,Y
+C23,7 Euler,rapport.tex:608,~0.0005,erreur_delta_n100,Greeks_Monte_Carlo.ipynb cell 17 (0.637735-0.637866),0.000131,N,0.0002,similaire ; selon réf 0.000131 (vs Exact) ou 0.000904 (vs BS),Y
+C24,7 Euler,rapport.tex:609,~0.0003,erreur_delta_n200,Greeks_Monte_Carlo.ipynb cell 17 (pas n200 dans output observé),N/A,N/A,N/A,rapport mentionne n=200 mais notebook output cell 17 ne montre que 10/50/100/500,Y
+C25,8 EDP,rapport.tex:654,10.4491,prix_EDP,Greeks_Monte_Carlo.ipynb cell 31,10.449136,Y,0.001,match parfait,Y
+C26,8 EDP,rapport.tex:655,0.6175,delta_EDP,Greeks_Monte_Carlo.ipynb cell 31,0.617495,Y,0.001,match parfait,Y
+C27,8 EDP,rapport.tex:656,0.0193,gamma_EDP,Greeks_Monte_Carlo.ipynb cell 31,0.019305,Y,0.001,match parfait,Y
+C28,8 EDP,rapport.tex:657,37.47,vega_EDP,Greeks_Monte_Carlo.ipynb cell 31,37.468254,Y,0.01,match parfait,Y
+C29,8 EDP,rapport.tex:654,0.0015,erreur_abs_prix_EDP,Greeks_Monte_Carlo.ipynb cell 31,0.001448,Y,0.0005,match,Y
+C30,8 EDP,rapport.tex:655,0.0193,erreur_abs_delta_EDP,Greeks_Monte_Carlo.ipynb cell 31,0.019336,Y,0.0005,match,Y
+C31,8 EDP,rapport.tex:656,0.0005,erreur_abs_gamma_EDP,Greeks_Monte_Carlo.ipynb cell 31,0.000543,Y,0.0001,match,Y
+C32,8 EDP,rapport.tex:657,0.06,erreur_abs_vega_EDP,Greeks_Monte_Carlo.ipynb cell 31,0.055780,Y,0.01,match,Y

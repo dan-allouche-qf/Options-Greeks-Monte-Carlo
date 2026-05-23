@@ -16,6 +16,12 @@
 
 \geometry{margin=2.5cm}
 
+% === CHIFFRES AUTO-GENERES (source unique de verite) ===
+% Tous les chiffres numeriques des tables (Delta/Gamma/Vega/Euler/EDP)
+% sont injectes via \newcommand depuis ../_audit/numbers.tex,
+% lui-meme regenere par .venv-audit/bin/python ../_audit/extract_numbers.py.
+\input{../_audit/numbers.tex}
+
 % === THEOREMES ===
 \theoremstyle{definition}
 \newtheorem{definition}{Définition}[section]
@@ -235,7 +241,7 @@ Nombre de simulations & $N$ & 50 000 \\
 \end{table}
 
 Avec ces paramètres, les valeurs théoriques de Black-Scholes sont :
-$$\text{Prix} = 10.4506, \quad \Delta = 0.6368, \quad \Gamma = 0.0188, \quad \mathcal{V} = 37.52$$
+$$\text{Prix} = \bsPrice, \quad \Delta = \bsDelta, \quad \Gamma = \bsGamma, \quad \mathcal{V} = \bsVega$$
 
 % ============================================
 \section{Méthode des Différences Finies}
@@ -450,7 +456,7 @@ Plusieurs techniques peuvent réduire la variance de Malliavin :
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{figures/delta_comparaison.png}
-\caption{Comparaison des trois méthodes pour le calcul du Delta. Chaque barre représente l'estimation Monte Carlo avec son intervalle de confiance à 95\%. La ligne horizontale rouge indique la valeur théorique de Black-Scholes ($\Delta = 0.6368$).}
+\caption{Comparaison des trois méthodes pour le calcul du Delta. Chaque barre représente l'estimation Monte Carlo avec son intervalle de confiance à 95\%. La ligne horizontale rouge indique la valeur théorique de Black-Scholes ($\Delta = \bsDelta$).}
 \label{fig:delta}
 \end{figure}
 
@@ -458,24 +464,24 @@ Plusieurs techniques peuvent réduire la variance de Malliavin :
 
 \begin{table}[H]
 \centering
-\begin{tabular}{lccccc}
+\begin{tabular}{lcccc}
 \toprule
-\textbf{Méthode} & \textbf{Estimation} & \textbf{Écart-type} & \textbf{IC 95\%} & \textbf{Erreur rel.} \\
+\textbf{Méthode} & \textbf{Estimation} & \textbf{SE} & \textbf{IC 95\%} & \textbf{Erreur rel.} \\
 \midrule
-Black-Scholes (ref.) & 0.6368 & -- & -- & -- \\
-Différences Finies & 0.6372 & 0.0021 & $\pm 0.0041$ & 0.06\% \\
-Pathwise & 0.6370 & 0.0021 & $\pm 0.0041$ & 0.03\% \\
-Malliavin & 0.6365 & 0.0152 & $\pm 0.0298$ & 0.05\% \\
+Black-Scholes (ref.) & \bsDelta & -- & -- & -- \\
+Différences Finies & \deltaFdEst & \deltaFdSe & $\pm \deltaFdIc$ & \deltaFdErrPct\% \\
+Pathwise & \deltaPwEst & \deltaPwSe & $\pm \deltaPwIc$ & \deltaPwErrPct\% \\
+Malliavin & \deltaMalEst & \deltaMalSe & $\pm \deltaMalIc$ & \deltaMalErrPct\% \\
 \bottomrule
 \end{tabular}
-\caption{Statistiques détaillées pour Delta ($N = 50\,000$)}
+\caption{Statistiques détaillées pour Delta ($N = \paramN$). SE = $\sigma_{\text{sample}}/\sqrt{N}$ ; IC 95\% = $\pm 1.96 \cdot$ SE. Pour FD, l'IC est obtenu par bootstrap (200 ré-échantillons sur $W_T$).}
 \end{table}
 
 \textbf{Observations clés :}
 \begin{itemize}
-    \item Les trois méthodes convergent vers la valeur théorique avec une erreur relative $< 0.1\%$
-    \item \textbf{Pathwise} et \textbf{Différences Finies} ont des variances comparables
-    \item \textbf{Malliavin} présente une variance environ \textbf{7 fois plus grande} (écart-type $\approx$ 7× celui de Pathwise)
+    \item Les trois méthodes convergent vers la valeur théorique avec une erreur relative inférieure à $1\%$
+    \item \textbf{Pathwise} et \textbf{Différences Finies} ont des variances comparables (SE quasi identiques)
+    \item \textbf{Malliavin} présente une SE environ $\deltaRatioMalPw\times$ plus grande que Pathwise, ce qui se traduit par une variance environ $\deltaVarRatioMalPw\times$ plus élevée
     \item L'intervalle de confiance de Malliavin est significativement plus large
 \end{itemize}
 
@@ -492,17 +498,17 @@ Malliavin & 0.6365 & 0.0152 & $\pm 0.0298$ & 0.05\% \\
 
 \begin{table}[H]
 \centering
-\begin{tabular}{lcccc}
+\begin{tabular}{lccc}
 \toprule
-\textbf{Méthode} & \textbf{Estimation} & \textbf{Écart-type} & \textbf{Erreur rel.} \\
+\textbf{Méthode} & \textbf{Estimation} & \textbf{SE} & \textbf{Erreur rel.} \\
 \midrule
-Black-Scholes (ref.) & 0.01876 & -- & -- \\
-Différences Finies & 0.01882 & 0.00052 & 0.32\% \\
+Black-Scholes (ref.) & \bsGammaFive & -- & -- \\
+Différences Finies & \gammaFdEst & \gammaFdSe & \gammaFdErrPct\% \\
 Pathwise & \textit{N/A} & -- & -- \\
-Malliavin & 0.01871 & 0.00178 & 0.27\% \\
+Malliavin & \gammaMalEst & \gammaMalSe & \gammaMalErrPct\% \\
 \bottomrule
 \end{tabular}
-\caption{Statistiques détaillées pour Gamma ($N = 50\,000$)}
+\caption{Statistiques détaillées pour Gamma ($N = \paramN$). SE = $\sigma_{\text{sample}}/\sqrt{N}$ ; pour FD via bootstrap 200 ré-échantillons.}
 \end{table}
 
 \textbf{Observations clés :}
@@ -526,17 +532,17 @@ Malliavin & 0.01871 & 0.00178 & 0.27\% \\
 
 \begin{table}[H]
 \centering
-\begin{tabular}{lcccc}
+\begin{tabular}{lccc}
 \toprule
-\textbf{Méthode} & \textbf{Estimation} & \textbf{Écart-type} & \textbf{Erreur rel.} \\
+\textbf{Méthode} & \textbf{Estimation} & \textbf{SE} & \textbf{Erreur rel.} \\
 \midrule
-Black-Scholes (ref.) & 37.524 & -- & -- \\
-Différences Finies & 37.52 & 0.12 & < 0.1\% \\
-Pathwise & 37.53 & 0.11 & < 0.1\% \\
-Malliavin & 37.51 & 0.85 & < 0.1\% \\
+Black-Scholes (ref.) & \bsVegaThree & -- & -- \\
+Différences Finies & \vegaFdEst & \vegaFdSe & \vegaFdErrPct\% \\
+Pathwise & \vegaPwEst & \vegaPwSe & \vegaPwErrPct\% \\
+Malliavin & \vegaMalEst & \vegaMalSe & \vegaMalErrPct\% \\
 \bottomrule
 \end{tabular}
-\caption{Statistiques détaillées pour Vega ($N = 50\,000$)}
+\caption{Statistiques détaillées pour Vega ($N = \paramN$). SE = $\sigma_{\text{sample}}/\sqrt{N}$ ; pour FD via bootstrap 200 ré-échantillons.}
 \end{table}
 
 \subsection{Synthèse : Efficacité Relative des Méthodes}
@@ -547,12 +553,12 @@ Malliavin & 37.51 & 0.85 & < 0.1\% \\
 \toprule
 \textbf{Méthode} & \textbf{Delta} & \textbf{Gamma} & \textbf{Vega} & \textbf{Variance relative} \\
 \midrule
-Différences Finies & \checkmark & \checkmark & \checkmark & $\sim 1\times$ \\
-Pathwise & \checkmark & $\times$ & \checkmark & $\sim 0.85\times$ (meilleur) \\
-Malliavin & \checkmark & \checkmark & \checkmark & $\sim 46\times$ (pire) \\
+Pathwise & \checkmark & $\times$ & \checkmark & $\sim 1\times$ (référence) \\
+Différences Finies & \checkmark & \checkmark & \checkmark & $\sim \varRatioFdPw\times$ \\
+Malliavin & \checkmark & \checkmark & \checkmark & $\sim \varRatioMalPw\times$ (pire) \\
 \bottomrule
 \end{tabular}
-\caption{Applicabilité et efficacité relative des méthodes}
+\caption{Applicabilité et efficacité relative des méthodes (ratio des variances sur Delta, $N = \paramN$).}
 \end{table}
 
 % ============================================
@@ -601,16 +607,16 @@ L'erreur de discrétisation Euler est :
 \toprule
 \textbf{Pas Euler} $n$ & \textbf{Erreur sur Delta} & \textbf{Temps relatif} \\
 \midrule
-10 & $\sim 0.002$ & 1× \\
-50 & $\sim 0.0008$ & 5× \\
-100 & $\sim 0.0005$ & 10× \\
-200 & $\sim 0.0003$ & 20× \\
+10  & \eulerErrTen          & 1× \\
+50  & \eulerErrFifty        & 5× \\
+100 & \eulerErrHundred      & 10× \\
+500 & \eulerErrFiveHundred  & 50× \\
 \bottomrule
 \end{tabular}
-\caption{Erreur de discrétisation vs coût de calcul}
+\caption{Erreur de discrétisation Euler vs simulation exacte ($N = \paramN$, référence = Delta Pathwise sur trajectoire exacte). À $n \geq 50$, l'erreur de discrétisation devient du même ordre que l'erreur Monte Carlo et son évolution avec $n$ est dominée par le bruit MC.}
 \end{table}
 
-\textbf{Recommandation :} Pour la plupart des applications, $n = 100$ pas offre un bon compromis précision/coût. L'erreur de discrétisation devient alors négligeable par rapport à l'erreur Monte Carlo.
+\textbf{Recommandation :} Pour la plupart des applications, $n = 100$ pas offre un bon compromis précision/coût : l'erreur de discrétisation est alors du même ordre de grandeur que la SE Monte Carlo ($\sim \deltaPwSe$ pour Delta Pathwise), donc pratiquement négligeable. Au-delà, augmenter $n$ ne réduit plus significativement l'erreur (saturée par le bruit MC) mais augmente proportionnellement le coût.
 
 % ============================================
 \section{Validation par Approche EDP}
@@ -650,13 +656,13 @@ Les Greeks sont calculés directement à partir de la solution numérique :
 \toprule
 \textbf{Quantité} & \textbf{EDP} & \textbf{Black-Scholes} & \textbf{Erreur abs.} \\
 \midrule
-Prix & 10.4491 & 10.4506 & 0.0015 \\
-Delta & 0.6175 & 0.6368 & 0.0193 \\
-Gamma & 0.0193 & 0.0188 & 0.0005 \\
-Vega & 37.47 & 37.52 & 0.06 \\
+Prix  & \pdePrice & \bsPrice & \pdeErrPrice \\
+Delta & \pdeDelta & \bsDelta & \pdeErrDelta \\
+Gamma & \pdeGamma & \bsGamma & \pdeErrGamma \\
+Vega  & \pdeVega  & \bsVega  & \pdeErrVega \\
 \bottomrule
 \end{tabular}
-\caption{Validation EDP vs Black-Scholes analytique}
+\caption{Validation EDP (Crank-Nicolson, grille $S_{\max}=300$, $N_S=N_t=200$) vs Black-Scholes analytique.}
 \end{table}
 
 \textbf{Observations :}

@@ -1,25 +1,16 @@
 # Options Greeks Monte Carlo
 
-A comprehensive implementation of Monte Carlo methods for computing option Greeks (Delta, Gamma, Vega) using variance reduction techniques and multiple differentiation approaches.
+Monte Carlo computation of European option Greeks (Delta, Gamma, Vega) under Black-Scholes, comparing three approaches against analytical and PDE benchmarks.
 
 ## Overview
 
-This project demonstrates advanced Monte Carlo simulation techniques for pricing European call options and calculating their sensitivities (Greeks) under the Black-Scholes framework. It implements and compares three different methods:
+European call option pricing and Greek sensitivities under Black-Scholes by Monte Carlo. Three methods are implemented and compared:
 
-- **Finite Differences**: Numerical differentiation of option prices
-- **Pathwise Derivative**: Direct differentiation through the payoff function
-- **Likelihood Ratio Method**: Differentiation of the probability measure
+- **Finite Differences**: numerical differentiation with common random numbers
+- **Pathwise Derivative**: differentiation of the payoff (Lipschitz case)
+- **Likelihood Ratio / Malliavin**: differentiation of the density via score functions
 
-The implementation includes variance reduction techniques (antithetic variables) and provides detailed convergence analysis and performance comparisons against analytical Black-Scholes formulas.
-
-## Key Features
-
-- **Multiple Greek Computation Methods**: Implementation of three distinct approaches for calculating Delta, Gamma, and Vega
-- **Variance Reduction**: Antithetic variables technique to improve estimation accuracy
-- **Convergence Analysis**: Detailed study of convergence rates and confidence intervals
-- **Performance Benchmarking**: Comparison with analytical Black-Scholes solutions
-- **Comprehensive Visualizations**: Plots showing convergence, error analysis, and method comparisons
-- **Theoretical Foundation**: Detailed mathematical explanations and proofs
+Antithetic variables are used for variance reduction. Results are validated against the closed-form Black-Scholes Greeks and against a Crank-Nicolson PDE solver.
 
 ## Methods Implemented
 
@@ -150,14 +141,6 @@ Options_Greeks_Monte_Carlo/
 - `matplotlib`: Plotting and visualizations
 - `jupyter`: Interactive notebook environment
 
-## Educational Value
-
-This project is ideal for:
-- Students learning computational finance
-- Practitioners exploring Monte Carlo methods
-- Researchers comparing Greek computation techniques
-- Anyone interested in option pricing and risk management
-
 ## References
 
 The implementation is based on standard computational finance literature:
@@ -165,28 +148,8 @@ The implementation is based on standard computational finance literature:
 - Jäckel, P. (2002). *Monte Carlo Methods in Finance*
 - Black-Scholes-Merton option pricing model
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
-
-
-
 ## Author
 
-**Dan Allouche**
+**Dan Allouche** — Master MASEF, Université Paris-Dauphine
 
 - GitHub: [@dan-allouche-qf](https://github.com/dan-allouche-qf)
-
-## Acknowledgments
-
-- Inspired by classical computational finance literature
-- Built for educational and research purposes
-- Thanks to the open-source scientific Python community
-
-## Contact
-
-For questions or feedback, please open an issue on GitHub or contact me directly.
-
----
-
-*Note: This project is for educational purposes. For production use in financial applications, additional validation and risk management procedures should be implemented.*
